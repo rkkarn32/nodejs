@@ -14,6 +14,7 @@ console.log(chalk.yellow('this is backGround Yellow'))
 console.log(chalk.green.bgWhite.bold.italic('This has lot of complex'))
 
 console.log(chalk.green.bold('SUCCESSS'))
+console.log(chalk.blue.inverse('This is Inverse effect'))
 
 const mile = 18;
 const calculateFeet = miles => miles * 5280;
