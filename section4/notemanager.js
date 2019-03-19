@@ -18,4 +18,21 @@ yargs.command('add','Add new Note',{
   noteUtil.addNote(args.title,args.body)
 })
 
+yargs.command('list','List all notes',function(){
+  console.log('Listing all nodes')
+  noteUtil.listNote();
+})
+
+yargs.command('remove','Remove provided title',{
+  title: {
+    title: 'Title to be removed',
+    alias: 't',
+    demandOption: true,
+    type: 'string'
+  }
+},function(args){
+  console.log('Removing Note: '+args.title)
+  noteUtil.removeNote(args.title)
+})
+
 yargs.parse()

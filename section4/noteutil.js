@@ -1,4 +1,5 @@
 const fs = require('fs')
+const chalk = require('chalk')
 const FILE_NAME = 'notedata.json'
 
 const addNote = function(title,body){
@@ -7,19 +8,29 @@ const addNote = function(title,body){
     title:title,
     body:body
   })
-  fs.writeFile(FILE_NAME,JSON.stringify(notes),(err)=>{
-    if(err){
-      console.log('Data isn\'t saved')
-    }else[
-      console.log('Data are saved')
-    ]
-  })
+  saveAll(notes)
+  // fs.writeFile(FILE_NAME,JSON.stringify(notes),(err)=>{
+  //   if(err){
+  //     console.log('Data isn\'t saved')
+  //   }else[
+  //     console.log('Data are saved')
+  //   ]
+  // })
 }
 const listNote = ()=> {
-  const notes = fs.readFileSync(FILE_NAME)
-
+  const notes = loadNotes()
+  var i = Number(0)
+  for (note of notes) {
+    i++
+    console.log('Note_'+i+' ==> Title: '+chalk.red(note.title)+', Body:'+chalk.green(note.body))
+  }
 }
+
 const removeNote = (title)=>{
+  var notes = loadNotes()
+  notes = remove(notes,title)
+  console.log(notes)
+  saveAll(notes)
 
 }
 
@@ -41,6 +52,21 @@ const loadNotes = ()=>{
     console.log('Error: '+e)
   }
   return []
+}
+
+function remove(array, title){
+  return array.filter(function(note){
+    return note.title!== title
+  })
+}
+function saveAll(notes){
+  fs.writeFile(FILE_NAME,JSON.stringify(notes),(err)=>{
+    if(err){
+      console.log('Data isn\'t saved')
+    }else[
+      console.log('Data are saved')
+    ]
+  })
 }
 
 module.exports = {addNote,removeNote,listNote,getNote}
