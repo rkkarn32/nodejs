@@ -4,18 +4,18 @@ const FILE_NAME = 'notedata.json'
 
 const addNote = function(title,body){
   var notes = loadNotes()
-  notes.push({
-    title:title,
-    body:body
+  const duplicateNotes = notes.filter((note)=>{
+    return note.title === title
   })
-  saveAll(notes)
-  // fs.writeFile(FILE_NAME,JSON.stringify(notes),(err)=>{
-  //   if(err){
-  //     console.log('Data isn\'t saved')
-  //   }else[
-  //     console.log('Data are saved')
-  //   ]
-  // })
+  if(duplicateNotes.length ===0){
+    notes.push({
+      title:title,
+      body:body
+    })
+    saveAll(notes)
+  }else{
+    console.log('Title already exist')
+  }
 }
 const listNote = ()=> {
   const notes = loadNotes()
@@ -29,8 +29,8 @@ const listNote = ()=> {
 const removeNote = (title)=>{
   var notes = loadNotes()
   notes = remove(notes,title)
-  console.log(notes)
   saveAll(notes)
+  listNote()
 
 }
 
@@ -64,7 +64,7 @@ function saveAll(notes){
     if(err){
       console.log('Data isn\'t saved')
     }else[
-      console.log('Data are saved')
+      console.log('Database updated')
     ]
   })
 }
