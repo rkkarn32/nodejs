@@ -1,4 +1,3 @@
 *.txt
 .tern-project
-node_modules/*
-weather-app/node_modules/*
+**/node_modules/*
