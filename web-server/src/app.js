@@ -4,7 +4,9 @@ const path = require('path')
 const app = express()
 
 const publicDir = path.join(__dirname+'/../public/')
+const viewTemplate = path.join(__dirname+'/../view-template/')
 app.set('view engine','hbs')
+app.set('views',viewTemplate)
 app.use(express.static(publicDir))
 
 app.get('',(req, res)=>{
