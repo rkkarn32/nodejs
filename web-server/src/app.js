@@ -1,19 +1,31 @@
+// const hbs = require('hbs')
 const express = require('express')
 const path = require('path')
 const app = express()
 
 const publicDir = path.join(__dirname+'/../public/')
+app.set('view engine','hbs')
 app.use(express.static(publicDir))
 
-app.get('', (req, res) => {
-  res.send('Hello this is from Express')
-})
-app.get('/help',(req, res)=>{
-  res.send('I\'m here for help')
+app.get('',(req, res)=>{
+  res.render('index',{
+    title: 'Weather App',
+    name: 'Ramesh'
+  })
 })
 
-app.get('/About',(req, res)=>{
-  res.send('This is testing our About page')
+app.get('/about',(req, res)=>{
+  res.render('about',{
+    title:'About',
+    message: 'Rending HBS'
+  })
+})
+
+app.get('/help',(req, res)=>{
+  res.render('Help',{
+    title:'Help',
+    message: 'Rending HBS'
+  })
 })
 app.get('/weather', (req, res)=>{
   res.send('Nice weather')
