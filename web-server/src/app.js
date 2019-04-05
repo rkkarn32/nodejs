@@ -2,7 +2,11 @@
 const express = require('express')
 const path = require('path')
 const hbs = require('hbs')
+// const getweather = require('./utils/weather')
+const geolocation = require('./utils/geolocation')
+
 const app = express()
+
 
 const publicDir = path.join(__dirname+'/../public/')
 const viewTemplate = path.join(__dirname+'/../template/view/')
@@ -36,14 +40,15 @@ app.get('/help',(req, res)=>{
     createdBy: 'Ramesh'
   })
 })
+
 app.get('/weather', (req, res)=>{
   if(!req.query.address){
     return res.send({
       error: 'Provide address for weather'
     })
   }
-  res.send({
-    address:req.query.address
+  geolocation(req.query.address, (message)=>{
+    res.send(message)
   })
 })
 
@@ -70,6 +75,7 @@ app.get('*',(req, res)=>{
     createdBy: 'Ramesh'
   })
 })
+
 app.listen(80, ()=>{
   console.log('Server started, ')
 })
