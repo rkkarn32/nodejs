@@ -11,7 +11,7 @@ const geolocation = function(location,callback){
 			console.log('Entered search criteria doesn\'t match any result')
       callback({error:'Entered search criteria doesn\'t match any result'})
 		}else{
-      getweather(body.features[0].center[1],body.features[0].center[0], callback)
+      getweather(body.features[0].place_name,body.features[0].center[1],body.features[0].center[0], callback)
     }
   }
 )
