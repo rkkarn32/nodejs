@@ -7,7 +7,7 @@ const getweather = function (place,longitude, lattitude,callback){
       console.log('Error finding weather data')
       callback('Error finding weather data')
     }else {
-      console.log('Current',body.currently)
+      // console.log('Current',body.currently)
       callback({location:place, weather_summary: body.currently.summary,temperature:body.currently.temperature,humidity: body.currently.humidity})
     }
   })
