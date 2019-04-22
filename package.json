@@ -21,7 +21,9 @@
   "homepage": "https://github.com/rkkarn32/nodejs#readme",
   "dependencies": {
     "chalk": "^2.4.2",
+    "express": "^4.16.4",
     "validator": "^10.11.0",
     "yargs": "^13.2.1"
-  }
+  },
+  "devDependencies": {}
 }
