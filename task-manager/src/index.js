@@ -34,6 +34,15 @@ app.post('/task',(req, res)=>{
   })
 })
 
+app.get('/users',(req,res)=>{
+  // const usser1 = User(req.query)
+  User.find(req.query).then((result)=>{
+    res.send("Result is: "+JSON.stringify(result))
+  }).catch((err)=>{
+    res.send('Error Occured during user Search: '+err)
+  })
+})
+
 app.listen(port,(err)=>{
   if(err){
     return console.log('Error: '+ err)
