@@ -43,6 +43,19 @@ app.get('/users',(req,res)=>{
   })
 })
 
+app.get('/users/:id',(req,res)=>{
+  User.findById(req.params.id).then((user)=>{
+    console.log('User Value:'+ user)
+    if(!user  ){
+      res.status(404).send('User not found !!!')
+    }else{
+      res.send(user)
+    }
+  }).catch((err)=>{
+    res.status(500).send('Error Occured: '+err)
+  })
+})
+
 app.listen(port,(err)=>{
   if(err){
     return console.log('Error: '+ err)
