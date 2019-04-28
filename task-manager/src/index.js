@@ -23,15 +23,21 @@ app.post('/user',(req,res)=>{
   })
 })
 
-app.post('/task',(req, res)=>{
+app.post('/task', async (req, res)=>{
   const task = Task(req.body)
-  task.save().then((result)=>{
-    res.status(201)
-    res.send('Task Saved: '+result)
-  }).catch((err)=>{
-    res.status(400)
-    res.send('Error during task creation: '+err)
-  })
+  try{
+    await task.save();
+    res.status(201).send(task)
+  }catch(err){
+    res.status(400).send('Error Occured: '+err)
+  }
+  // task.save().then((result)=>{
+  //   res.status(201)
+  //   res.send('Task Saved: '+result)
+  // }).catch((err)=>{
+  //   res.status(400)
+  //   res.send('Error during task creation: '+err)
+  // })
 })
 
 app.get('/users',(req,res)=>{
@@ -44,10 +50,10 @@ app.get('/users',(req,res)=>{
 })
 
 app.get('/users/:id',(req,res)=>{
-  User.findById(req.params.id).then((user)=>{
+  User.User.findById(req.params.id).then((user)=>{
     console.log('User Value:'+ user)
     if(!user  ){
-      res.status(404).send('User not found !!!')
+      res.status(404).send(`User ${req.params.id} not found !!!`)
     }else{
       res.send(user)
     }
