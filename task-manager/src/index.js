@@ -42,6 +42,20 @@ app.get('/users',(req,res)=>{
     res.send('Error Occured during user Search: '+err)
   })
 })
+
+app.get('/users/:id',(req,res)=>{
+  User.findById(req.params.id).then((user)=>{
+    console.log('User Value:'+ user)
+    if(!user  ){
+      res.status(404).send('User not found !!!')
+    }else{
+      res.send(user)
+    }
+  }).catch((err)=>{
+    res.status(500).send('Error Occured: '+err)
+  })
+})
+
 app.delete('/delete/:id', (req, res)=>{
   User.deleteAndUpdateCount(req.params.id).then((count)=>{
     res.send('Remaining Count: '+count)
