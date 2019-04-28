@@ -36,13 +36,20 @@ app.post('/task',(req, res)=>{
 
 app.get('/users',(req,res)=>{
   // const usser1 = User(req.query)
-  User.find(req.query).then((result)=>{
+  User.User.find(req.query).then((result)=>{
     res.send("Result is: "+JSON.stringify(result))
   }).catch((err)=>{
     res.send('Error Occured during user Search: '+err)
   })
 })
-
+app.delete('/delete/:id', (req, res)=>{
+  User.deleteAndUpdateCount(req.params.id).then((count)=>{
+    res.send('Remaining Count: '+count)
+  }).catch((err)=>{
+    console.log('Error Occured while deleting : '+err)
+    res.send('Error Occured while deleting : '+err)
+  })
+})
 app.listen(port,(err)=>{
   if(err){
     return console.log('Error: '+ err)

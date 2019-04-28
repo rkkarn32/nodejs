@@ -9,4 +9,12 @@ const userSchema = new Schema({
   }}
 })
 const User = mongoose.model('User',userSchema)
-module.exports = User;
+
+const deleteAndUpdateCount = async (id)=>{
+  const isDeleted = await User.findByIdAndDelete(id)
+  console.log('DeleteDone')
+  const countRemain = User.countDocuments({})
+  console.log('Deleted: '+isDeleted+', Count: '+countRemain)
+  return countRemain
+}
+module.exports = {User, deleteAndUpdateCount};
