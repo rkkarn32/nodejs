@@ -6,15 +6,16 @@ const userSchema = new Schema({
   age: {type:Number, required:true},
   address: {type:String, required: function (){
     return this.age>18
-  }}
+  }},
+  language:String
 })
-const User = mongoose.model('User',userSchema)
+const Model = mongoose.model('User',userSchema)
 
 const deleteAndUpdateCount = async (id)=>{
-  const isDeleted = await User.findByIdAndDelete(id)
+  const isDeleted = await Model.findByIdAndDelete(id)
   console.log('DeleteDone')
-  const countRemain = User.countDocuments({})
+  const countRemain = Model.countDocuments({})
   console.log('Deleted: '+isDeleted+', Count: '+countRemain)
   return countRemain
 }
-module.exports = {User, deleteAndUpdateCount};
+module.exports = {Model, deleteAndUpdateCount};

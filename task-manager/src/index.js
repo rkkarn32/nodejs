@@ -13,7 +13,7 @@ app.all('/',(req,res)=>{
 
 app.post('/user',(req,res)=>{
   console.log(req.body)
-  const usr1 = User(req.body)
+  const usr1 = User.Model(req.body)
   usr1.save().then((result)=>{
     res.status(201)
     res.send('User Saved: '+JSON.stringify(result))
@@ -42,7 +42,7 @@ app.post('/task', async (req, res)=>{
 
 app.get('/users',(req,res)=>{
   // const usser1 = User(req.query)
-  User.User.find(req.query).then((result)=>{
+  User.Model.find(req.query).then((result)=>{
     res.send("Result is: "+JSON.stringify(result))
   }).catch((err)=>{
     res.send('Error Occured during user Search: '+err)
@@ -50,7 +50,7 @@ app.get('/users',(req,res)=>{
 })
 
 app.get('/users/:id',(req,res)=>{
-  User.User.findById(req.params.id).then((user)=>{
+  User.Model.findById(req.params.id).then((user)=>{
     console.log('User Value:'+ user)
     if(!user  ){
       res.status(404).send(`User ${req.params.id} not found !!!`)
@@ -63,7 +63,7 @@ app.get('/users/:id',(req,res)=>{
 })
 
 app.delete('/delete/:id', (req, res)=>{
-  User.deleteAndUpdateCount(req.params.id).then((count)=>{
+  User.Model.deleteAndUpdateCount(req.params.id).then((count)=>{
     res.send('Remaining Count: '+count)
   }).catch((err)=>{
     console.log('Error Occured while deleting : '+err)
