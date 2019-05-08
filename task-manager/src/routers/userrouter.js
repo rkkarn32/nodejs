@@ -52,6 +52,15 @@ router.post('/users',async (req,res)=>{
   })
 })
 
+router.post('/login',async (req, res)=>{
+  if(!req.query.token){
+    return res.status(400).send('You are not authorized')
+  }
+  const data = jwt.verify(req.query.token,signing)
+  console.log('You are Logged in ')
+  res.status(200).send('Your info: '+JSON.stringify(data))
+})
+
 router.delete('/user/delete/:id', (req, res)=>{
   User.Model.deleteAndUpdateCount(req.params.id).then((count)=>{
     res.send('Remaining Count: '+count)
