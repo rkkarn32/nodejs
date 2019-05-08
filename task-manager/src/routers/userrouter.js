@@ -1,7 +1,16 @@
 const express = require('express')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const User = require('../model/user')
+
+const signing = 'signMe'
 const router = express.Router()
 
+// router.use(async (req,res,next)=>{
+//   console.log('Before router')
+//   next()
+//   console.log('After Router')
+// })
 router.get('/users',(req,res)=>{
   // const usser1 = User(req.query)
   User.Model.find(req.query).then((result)=>{
@@ -24,12 +33,19 @@ router.get('/users/:id',(req,res)=>{
   })
 })
 
-router.post('/users',(req,res)=>{
-  console.log(req.body)
+router.post('/users',async (req,res)=>{
+  if(req.body.passphrase){
+    var pass = await bcrypt.hash(req.body.passphrase,8)
+    req.body.passphrase = pass
+    // console.log(pass)
+  }
   const usr1 = User.Model(req.body)
   usr1.save().then((result)=>{
     res.status(201)
-    res.send('User Saved: '+JSON.stringify(result))
+    const jsonObj = result.toJSON()
+    const signature = jwt.sign(jsonObj,signing)
+    jsonObj.sign = signature
+    res.send('User Saved: '+JSON.stringify(jsonObj))
   }).catch((err)=>{
     res.status(400)
     res.send('Error during User creation: '+err)

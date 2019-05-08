@@ -7,7 +7,9 @@ const userSchema = new Schema({
   address: {type:String, required: function (){
     return this.age>18
   }},
-  language:String
+  language: String,
+  username: {type: String, required: true},
+  passphrase: {type: String, required: true}
 })
 const Model = mongoose.model('User',userSchema)
 
